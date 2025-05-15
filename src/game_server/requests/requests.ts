@@ -3,6 +3,8 @@ import { Database } from '../database/db';
 import reg from './reg';
 import regOut from './regout';
 import createRoom from './createroom';
+import addUserToRoom from './addusertoroom';
+import addShips from './addships';
 
 export const requestTypes = {
   empty: 'empty',
@@ -78,7 +80,7 @@ const parseRequest = (requestData: string, userWs: WebSocket) => {
 
 export const processingRequest = (requestData: string, userWs: WebSocket, db: Database) => {
   const message = parseRequest(requestData, userWs);
-  // console.log({ message });
+  console.log({ message });
   if (!message.isCorrect) {
     if (message.answer) console.error(message.answer);
     return;
@@ -95,12 +97,10 @@ export const processingRequest = (requestData: string, userWs: WebSocket, db: Da
       result = createRoom(message, db);
       break;
     case requestTypes.add_user_to_room:
-      {
-      }
+      result = addUserToRoom(message, db);
       break;
     case requestTypes.add_ships:
-      {
-      }
+      result = addShips(message, db);
       break;
     case requestTypes.attack:
       {
